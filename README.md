@@ -3,7 +3,7 @@
 serverside_mirocle merupakan project javascript dari alat terapi sepeda cermin berbasis iot.
 
 langkah penginstalan
-1. install node js di localhost atau server 
+1. install node js di local server atau server 
 2. sesuaikan database dari localhost maupun server 
 3. install depedensi mqtt dan mysql 
   npm install mqtt
