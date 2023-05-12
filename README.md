@@ -11,11 +11,12 @@ serverside_mirocle merupakan project javascript dari alat terapi sepeda cermin b
 4. tinggal jalankan saja scriptnya melalui node js 
   node <nama file.js>
 
+```
 # konteks: minta info pasien
 - publisher: alat 
 - topik: data_request
 - format pesan: 
-  ```
+
 {
     "request_time": 757233,
     "device_id": "mirocle_001",
