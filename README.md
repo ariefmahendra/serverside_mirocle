@@ -12,6 +12,7 @@ serverside_mirocle merupakan project javascript dari alat terapi sepeda cermin b
   node <nama file.js>
 
 ```
+# FORMAT PESAN PENGIRIMAN 
 # konteks: minta info pasien
 - publisher: alat 
 - topik: data_request
@@ -22,8 +23,6 @@ serverside_mirocle merupakan project javascript dari alat terapi sepeda cermin b
     "device_id": "mirocle_001",
     "request_type": "info_pasien"
 }
-  
-FORMAT PESAN PENGIRIMAN 
 
 # konteks: balas permintaan info pasien
 - publisher: server
