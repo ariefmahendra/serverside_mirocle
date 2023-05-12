@@ -117,13 +117,13 @@ username  : mirocle
 password  : 123
   
 setingan broker mqttx (sama)
-![alt text]( https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/setingan%20mqttx.png )
+![img.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/setingan%20mqttx.png)
   
 setingan broker mqtt explorer (sama)
-![image.png]({https://drive.google.com/open?id=1GlRBu3NXP3wDZp3QSxwMpc0sQ2Cm_w8p&authuser=taelektro9%40gmail.com&usp=drive_fs})
+![image.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/setting%20mqtt%20exloler.png)
   
 setingan subscriber di mqtt explorer 
-![image.png]({https://drive.google.com/open?id=1GlRBu3NXP3wDZp3QSxwMpc0sQ2Cm_w8p&authuser=taelektro9%40gmail.com&usp=drive_fs})
+![image.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/setting%20mqtt%20explorer%201.png)
   
 2. jalankan file data_terapi.js di terminal dengan perintah 
 $node data_terapi.js
@@ -145,7 +145,7 @@ $node data_terapi.js
     "id_terapi": 1683696600
 }
 
-![image.png]({https://drive.google.com/open?id=1GlvFYLpF8b2TDJYy9GsLXxwnoKqx5T_3&authuser=taelektro9%40gmail.com&usp=drive_fs})
+![image.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/pengiriman%20pesan%20mqttx.png)
   
 sembari lihat terminal, isi pesannya apa dari server node js
 
@@ -173,7 +173,7 @@ sembari lihat terminal, isi pesannya apa dari server node js
 }
 
 contoh 
-![image.png]({https://drive.google.com/open?id=1GmEt5TBAJQxCCYgM2r653c8tdnD2p20h&authuser=taelektro9%40gmail.com&usp=drive_fs})
+![image.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/ngirim%20pesan%20mqtt%20explorer.png)
   
 5. kalau pengiriman data sensor sudah selesai lakukan pengiriman lagi bisa di mqttx atau mqtt explorer sesuai format berikut ini 
   
