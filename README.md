@@ -15,11 +15,13 @@ serverside_mirocle merupakan project javascript dari alat terapi sepeda cermin b
 - publisher: alat 
 - topik: data_request
 - format pesan: 
+  ```
 {
     "request_time": 757233,
     "device_id": "mirocle_001",
     "request_type": "info_pasien"
 }
+  ```
   
 FORMAT PESAN PENGIRIMAN 
 
@@ -27,6 +29,7 @@ FORMAT PESAN PENGIRIMAN
 - publisher: server
 - topik: data_reply
 - format pesan:
+  ```
 {
   "device_id": [seri_alat],
   "reply_type": [tipe_balasan],
@@ -36,7 +39,9 @@ FORMAT PESAN PENGIRIMAN
   "berat_badan": [berat_badan_pasien],
   "usia": [usia_pasien]
 }
+  ```
 - contoh pesan:
+  ```
 {
   "device_id": "mirocle_001",
   "reply_type": "info_pasien",
@@ -46,27 +51,33 @@ FORMAT PESAN PENGIRIMAN
   "berat_badan": 55,
   "usia": 40
 }
+  ```
 
 # koneks: kirim info mulai terapi
 - publisher: alat
 - format topik: terapi_begin 
 - contoh topik: terapi_begin
 - format pesan: 
+  ```
 {
     "seri_alat": [seri_alat],
     "id_terapi": [unixtime]
 }
+  ```
 - contoh pesan: 
+  ```
 {
     "seri_alat": "mirocle_001",
     "id_terapi": 1683696600
 }
+  ```
 
 # konteks: kirim data terapi
 - publisher: alat
 - format topik: data_terapi/[id_terapi]
 - contoh topik: data_terapi/1683696600
 - format pesan: 
+  ```
 {
     "detakJantung":[nilai],
     "jumlahDetakJantung":[nilai],
@@ -74,7 +85,9 @@ FORMAT PESAN PENGIRIMAN
     "kalori":[nilai],
     "putaranPedal":[nilai]
 }
+  ```
 - contoh pesan:
+  ```
 {
     "detakJantung":0,
     "jumlahDetakJantung":0,
@@ -82,12 +95,14 @@ FORMAT PESAN PENGIRIMAN
     "kalori":33.79529953,
     "putaranPedal":0
 }
+  ```
 
 # konteks: kirim data final terapi
 - publisher: alat
 - format topik: terapi_end
 - contoh topik: terapi_end
 - format pesan: 
+  ```
 {
    "id_terapi": 1683698400,
     "waktu_mulai": 1683696600,
@@ -97,7 +112,9 @@ FORMAT PESAN PENGIRIMAN
     "kaloriTotal":[nilai],
     "putaranPedal":[nilai]
 }
+  ```
 - contoh pesan:
+  ```
 {
     "id_terapi": 1683698400,
     "waktu_mulai": 1683696600,
@@ -107,6 +124,7 @@ FORMAT PESAN PENGIRIMAN
     "kaloriTotal":898,
     "putaranPedal":898
 }
+  ```
 
 # Cara penggunaan pada sistem website dan server (untuk data_terapi.js)
 1. siapkan aplikasi mqttx dan mqtt exploler 
@@ -135,15 +153,19 @@ $node data_terapi.js
 - format topik: terapi_begin 
 - contoh topik: terapi_begin
 - format pesan: 
+  ```
 {
     "seri_alat": [seri_alat],
     "id_terapi": [unixtime]
 }
+  ```
 - contoh pesan: 
+  ```
 {
     "seri_alat": "mirocle_001",
     "id_terapi": 1683696600
 }
+  ```
 
 ![image.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/pengiriman%20pesan%20mqttx.png)
   
@@ -155,7 +177,8 @@ sembari lihat terminal, isi pesannya apa dari server node js
 - publisher: alat
 - format topik: data_terapi/[id_terapi]
 - contoh topik: data_terapi/1683696600
-- format pesan: 
+- format pesan:
+ ```
 {
     "detakJantung":[nilai],
     "jumlahDetakJantung":[nilai],
@@ -163,7 +186,9 @@ sembari lihat terminal, isi pesannya apa dari server node js
     "kalori":[nilai],
     "putaranPedal":[nilai]
 }
+```
 - contoh pesan:
+```
 {
     "detakJantung":0,
     "jumlahDetakJantung":0,
@@ -171,6 +196,7 @@ sembari lihat terminal, isi pesannya apa dari server node js
     "kalori":33.79529953,
     "putaranPedal":0
 }
+```
 
 contoh 
 ![image.png](https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/ngirim%20pesan%20mqtt%20explorer.png)
@@ -182,6 +208,7 @@ contoh
 - format topik: terapi_end
 - contoh topik: terapi_end
 - format pesan: 
+```
 {
    "id_terapi": 1683698400,
     "waktu_mulai": 1683696600,
@@ -191,7 +218,9 @@ contoh
     "kaloriTotal":[nilai],
     "putaranPedal":[nilai]
 }
+```
 - contoh pesan:
+```
 {
     "id_terapi": 1683698400,
     "waktu_mulai": 1683696600,
@@ -201,4 +230,5 @@ contoh
     "kaloriTotal":898,
     "putaranPedal":898
 }
+```
   
