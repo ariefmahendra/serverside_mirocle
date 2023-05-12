@@ -117,7 +117,7 @@ username  : mirocle
 password  : 123
   
 setingan broker mqttx (sama)
-![image.png]( {https://drive.google.com/open?id=1GlYjv7AM-e1egDJDdaknwsF6xVNIozOg&authuser=taelektro9%40gmail.com&usp=drive_fs} )
+![image.png]( {https://github.com/ariefmahendra/serverside_mirocle/blob/master/public/setingan%20mqttx.png} )
   
 setingan broker mqtt explorer (sama)
 ![image.png]({https://drive.google.com/open?id=1GlRBu3NXP3wDZp3QSxwMpc0sQ2Cm_w8p&authuser=taelektro9%40gmail.com&usp=drive_fs})
