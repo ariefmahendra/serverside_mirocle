@@ -6,7 +6,7 @@ const dbConfig = {
   host: "localhost",
   user: "root",
   password: "",
-  database: "mirocle",
+  database: "iot-mirocle",
 };
 
 // Buat koneksi ke MySQL
@@ -47,7 +47,13 @@ mqttClient.on("message", (topic, message) => {
     // Jika request_type adalah 'info_pasien'
     if (parsedMessage.request_type === "info_pasien") {
       // Query untuk mencari info_pasien berdasarkan device_id
-      const query = "SELECT * FROM info_pasien WHERE device_id = ?";
+      const query =
+        "SELECT u.name, p.jenis_kelamin, p.berat_badan, p.umur AS usia " +
+        "FROM users AS u " +
+        "JOIN profiles AS p ON u.id = p.user_id " +
+        "WHERE u.device_id = ?";
+
+      // const query = "SELECT * FROM profiles WHERE device_id = ?";
       connection.query(query, [parsedMessage.device_id], (err, result) => {
         if (err) {
           console.error("Gagal mengambil data dari MySQL:", err);
@@ -58,7 +64,7 @@ mqttClient.on("message", (topic, message) => {
               device_id: parsedMessage.device_id,
               reply_type: "info_pasien",
               request_time: parsedMessage.request_time,
-              nama: result[0].nama,
+              nama: result[0].name,
               jenis_kelamin: result[0].jenis_kelamin,
               berat_badan: result[0].berat_badan,
               usia: result[0].usia,
