@@ -53,12 +53,12 @@ client.on("message", (topic, message) => {
     console.log(`Menerima data terapi untuk id: ${id_terapi}`);
     // Lakukan sesuatu dengan data yang diterima
     const query = `
-      INSERT INTO sensor_data (detak_jantung, jumlah_detak_jantung, saturasi_oksigen, kalori, putaran_pedal)
+      INSERT INTO sensor_data (detak_jantung, durasi, saturasi_oksigen, kalori, putaran_pedal)
       VALUES (?, ?, ?, ?, ?)
     `;
     const values = [
       data.detakJantung,
-      data.jumlahDetakJantung,
+      data.durasi,
       data.saturasiOksigen,
       data.kalori,
       data.putaranPedal,
