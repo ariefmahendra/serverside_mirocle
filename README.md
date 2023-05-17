@@ -74,7 +74,7 @@ contoh pesan
 
 {
     "detakJantung":[nilai],
-    "jumlahDetakJantung":[nilai],
+    "durasi":[nilai],
     "saturasiOksigen":[nilai],
     "kalori":[nilai],
     "putaranPedal":[nilai]
@@ -84,7 +84,7 @@ contoh pesan
 
 {
     "detakJantung":0,
-    "jumlahDetakJantung":0,
+    "durasi":0,
     "saturasiOksigen":0,
     "kalori":33.79529953,
     "putaranPedal":0
