@@ -16,8 +16,8 @@ const client = mqtt.connect(MQTT_BROKER, {
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "mirocle",
+  password: "Mirocle123-",
+  database: "iot-mirocle",
 });
 
 db.connect((err) => {
@@ -36,82 +36,122 @@ client.on("connect", () => {
 });
 
 let id_terapi;
+let device_id;
 
 client.on("message", (topic, message) => {
   if (topic == "terapi_begin") {
     const data = JSON.parse(message);
     id_terapi = data.id_terapi;
+    device_id = data.device_id;
     console.log(`Menerima data terapi baru dengan id: ${id_terapi}`);
     waktu = new Date(id_terapi * 1000)
       .toISOString()
       .slice(0, 19)
       .replace("T", " ");
     console.log(
-      `Menerima data terapi baru dengan id: ${id_terapi} pada waktu: ${waktu}`
+      `Menerima data terapi baru dengan id: ${id_terapi} pada waktu: ${waktu} dengan device id = ${device_id}`
     );
-  } else if (topic == `terapi_data/${id_terapi}`) {
+  } else if (topic === `terapi_data/${id_terapi}`) {
     const data = JSON.parse(message);
     console.log(`Menerima data terapi untuk id: ${id_terapi}`);
-    // Lakukan sesuatu dengan data yang diterima
-    const query = `
-      INSERT INTO sensor_data (detak_jantung, durasi, saturasi_oksigen, kalori, putaran_pedal)
-      VALUES (?, ?, ?, ?, ?)
-    `;
-    const values = [
-      data.detakJantung,
-      data.durasi,
-      data.saturasiOksigen,
-      data.kalori,
-      data.putaranPedal,
-    ];
-    db.query(query, values, (error, results, fields) => {
+
+    // Periksa keberadaan device_id dalam tabel users
+    const checkDeviceQuery = `SELECT id AS user_id, device_id FROM users WHERE device_id = ?`;
+    db.query(checkDeviceQuery, [device_id], (error, results, fields) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("Data berhasil dimasukkan ke dalam tabel sensor_data");
+        if (results.length === 0) {
+          console.log("Device ID tidak valid");
+        } else {
+          const device_id = results[0].device_id;
+          const user_id = results[0].user_id;
+          console.log(`Device ID ditemukan: ${device_id}`);
+          console.log(`User ID yang terkait: ${user_id}`);
+
+          // Lanjutkan operasi INSERT ke tabel sensor_data
+          const query = `
+          INSERT INTO sensor_data (user_id, detak_jantung, durasi, saturasi_oksigen, kalori, putaran_pedal)
+          SELECT id, ?, ?, ?, ?, ? FROM users WHERE device_id = ?
+          `;
+          const values = [
+            data.detakJantung,
+            data.durasi,
+            data.saturasiOksigen,
+            data.kalori,
+            data.putaranPedal,
+            device_id, // Ubah menjadi device_id
+          ];
+          db.query(query, values, (error, results, fields) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(
+                "Data berhasil dimasukkan ke dalam tabel sensor_data"
+              );
+            }
+          });
+        }
       }
     });
   } else if (topic == `terapi_end`) {
     const data = JSON.parse(message);
-    waktu_mulai = data.waktu_mulai;
     console.log(`Menerima data terapi final dengan id: ${id_terapi}`);
-    waktu_mulai = new Date(waktu_mulai * 1000)
+    const waktu_mulai = new Date(data.waktu_mulai * 1000)
       .toISOString()
       .slice(0, 19)
       .replace("T", " ");
     console.log(
-      `Menerima data terapi final dengan id: ${id_terapi} pada waktu: ${waktu_mulai}`
+      `Menerima data terapi final dengan id: ${id_terapi} pada waktu mulai: ${waktu_mulai}`
     );
 
-    waktu_selesai = data.waktu_selesai;
-    console.log(`Menerima data terapi final dengan id: ${id_terapi}`);
-    waktu_selesai = new Date(waktu_selesai * 1000)
+    const waktu_selesai = new Date(data.waktu_selesai * 1000)
       .toISOString()
       .slice(0, 19)
       .replace("T", " ");
     console.log(
-      `Menerima data terapi final dengan id: ${id_terapi} pada waktu: ${waktu_selesai}`
+      `Menerima data terapi final dengan id: ${id_terapi} pada waktu selesai: ${waktu_selesai}`
     );
 
-    const query = `
-      INSERT INTO sensor_data_final (id_terapi, waktu_mulai, waktu_selesai, rata_rata_detak_jantung, kalori_total, putaran_pedal, durasi)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [
-      id_terapi,
-      waktu_mulai,
-      waktu_selesai,
-      data.detakJantungRataRata,
-      data.kaloriTotal,
-      data.putaranPedal,
-      data.durasi,
-    ];
-
-    db.query(query, values, (error, results, fields) => {
+    // Periksa keberadaan device_id dalam tabel users
+    const checkDeviceQuery = `SELECT id AS user_id, device_id FROM users WHERE device_id = ?`;
+    db.query(checkDeviceQuery, [device_id], (error, results, fields) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("Data berhasil dimasukkan ke dalam tabel info_terapi");
+        if (results.length === 0) {
+          console.log("Device ID tidak valid");
+        } else {
+          const device_id = results[0].device_id;
+          const user_id = results[0].user_id;
+          console.log(`Device ID ditemukan: ${device_id}`);
+          console.log(`User ID yang terkait: ${user_id}`);
+
+          // Lanjutkan operasi INSERT ke tabel sensor_data_final
+          const query = `
+            INSERT INTO sensor_data_final (user_id, id_terapi, waktu_mulai, waktu_selesai, rata_rata_detak_jantung, kalori_total, putaran_pedal, durasi)
+            SELECT id, ?, ?, ?, ?, ?, ?, ? FROM users WHERE device_id = ?
+          `;
+          const values = [
+            id_terapi,
+            waktu_mulai,
+            waktu_selesai,
+            data.detakJantungRataRata,
+            data.kaloriTotal,
+            data.putaranPedal,
+            data.durasi,
+            device_id, // Ubah menjadi device_id
+          ];
+          db.query(query, values, (error, results, fields) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(
+                "Data berhasil dimasukkan ke dalam tabel sensor_data_final"
+              );
+            }
+          });
+        }
       }
     });
   }

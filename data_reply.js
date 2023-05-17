@@ -5,7 +5,7 @@ const mysql = require("mysql");
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "",
+  password: "Mirocle123-",
   database: "iot-mirocle",
 };
 
