@@ -10,6 +10,7 @@ const client = mqtt.connect(MQTT_BROKER, {
   username: MQTT_USERNAME,
   password: MQTT_PASSWORD,
   port: MQTT_PORT,
+  qos: 0,
 });
 
 const db = mysql.createConnection({
@@ -29,9 +30,9 @@ db.connect((err) => {
 
 client.on("connect", () => {
   console.log("Terhubung ke broker MQTT");
-  client.subscribe("terapi_begin");
-  client.subscribe("terapi_data/#");
-  client.subscribe("terapi_end");
+  client.subscribe("terapi_begin", { qos: 0 });
+  client.subscribe("terapi_data/#", { qos: 0 });
+  client.subscribe("terapi_end", { qos: 0 });
 });
 
 let id_terapi;

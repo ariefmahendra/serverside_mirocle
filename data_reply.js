@@ -16,13 +16,14 @@ const connection = mysql.createConnection(dbConfig);
 const mqttClient = mqtt.connect("mqtt://broker.emqx.io:1883", {
   username: "mirocle",
   password: "123",
+  qos: 0,
 });
 
 mqttClient.on("connect", () => {
   console.log("Terhubung ke MQTT broker.");
 
   // Subscribe ke topik yang diinginkan
-  mqttClient.subscribe("data_request", (err) => {
+  mqttClient.subscribe("data_request", { qos: 0 }, (err) => {
     if (err) {
       console.error("Gagal subscribe ke topik:", err);
     } else {
@@ -72,7 +73,7 @@ mqttClient.on("message", (topic, message) => {
             console.log("Data ditemukan:", data);
 
             // Kirim data kembali ke perangkat melalui MQTT
-            mqttClient.publish("data_reply", JSON.stringify(data));
+            mqttClient.publish("data_reply", JSON.stringify(data), { qos: 0 });
           } else {
             console.log("Data tidak ditemukan.");
           }
