@@ -103,6 +103,7 @@ contoh pesan
     "waktu_selesai": 1683696600,
     "durasi":[nilai],
     "detakJantungRataRata":[nilai],
+    "rataRataSaturasiOksigen":[nilai],
     "kaloriTotal":[nilai],
     "putaranPedal":[nilai]
 }
@@ -115,6 +116,7 @@ contoh pesan
     "waktu_selesai": 1683696600,
     "durasi":898
     "detakJantungRataRata":399,
+    "rataRataSaturasiOksigen":23,
     "kaloriTotal":898,
     "putaranPedal":898
 }
