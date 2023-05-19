@@ -129,14 +129,15 @@ client.on("message", (topic, message) => {
 
           // Lanjutkan operasi INSERT ke tabel sensor_data_final
           const query = `
-            INSERT INTO sensor_data_final (user_id, id_terapi, waktu_mulai, waktu_selesai, rata_rata_detak_jantung, kalori_total, putaran_pedal, durasi)
-            SELECT id, ?, ?, ?, ?, ?, ?, ? FROM users WHERE device_id = ?
+            INSERT INTO sensor_data_final (user_id, id_terapi, waktu_mulai, waktu_selesai, rata_rata_detak_jantung, rata_rata_saturasi_oksigen, kalori_total, putaran_pedal, durasi)
+            SELECT id, ?, ?, ?, ?, ?, ?, ?, ? FROM users WHERE device_id = ?
           `;
           const values = [
             id_terapi,
             waktu_mulai,
             waktu_selesai,
             data.detakJantungRataRata,
+            data.rataRataSaturasiOksigen,
             data.kaloriTotal,
             data.putaranPedal,
             data.durasi,
