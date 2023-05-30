@@ -47,14 +47,18 @@ mqttClient.on("message", (topic, message) => {
   ) {
     // Jika request_type adalah 'info_pasien'
     if (parsedMessage.request_type === "info_pasien") {
-      // Query untuk mencari info_pasien berdasarkan device_id
+      // Query untuk mencari info_pasien berdasarkan user_id dan status yang sedang aktif
       const query =
         "SELECT u.name, p.jenis_kelamin, p.berat_badan, p.umur AS usia " +
         "FROM users AS u " +
         "JOIN profiles AS p ON u.id = p.user_id " +
-        "WHERE u.device_id = ?";
+        "WHERE u.device_id = ? AND u.status = 1";
 
-      // const query = "SELECT * FROM profiles WHERE device_id = ?";
+      // "SELECT u.name, p.jenis_kelamin, p.berat_badan, p.umur AS usia " +
+      // "FROM users AS u " +
+      // "JOIN profiles AS p ON u.id = p.user_id " +
+      // "WHERE u.device_id = ? AND u.status = 1";
+
       connection.query(query, [parsedMessage.device_id], (err, result) => {
         if (err) {
           console.error("Gagal mengambil data dari MySQL:", err);

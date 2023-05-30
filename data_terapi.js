@@ -42,7 +42,7 @@ client.on("message", (topic, message) => {
   if (topic == "terapi_begin") {
     const data = JSON.parse(message);
     id_terapi = data.id_terapi;
-    device_id = data.device_id;
+    device_id = data.seri_alat;
     console.log(`Menerima data terapi baru dengan id: ${id_terapi}`);
     waktu = new Date(id_terapi * 1000)
       .toISOString()
@@ -56,7 +56,8 @@ client.on("message", (topic, message) => {
     console.log(`Menerima data terapi untuk id: ${id_terapi}`);
 
     // Periksa keberadaan device_id dalam tabel users
-    const checkDeviceQuery = `SELECT id AS user_id, device_id FROM users WHERE device_id = ?`;
+    // const checkDeviceQuery = `SELECT id AS user_id, device_id FROM users WHERE device_id = ? AND status = 1`;
+    const checkDeviceQuery = `SELECT id AS user_id, device_id FROM users WHERE device_id = ? AND status = 1`;
     db.query(checkDeviceQuery, [device_id], (error, results, fields) => {
       if (error) {
         console.log(error);
