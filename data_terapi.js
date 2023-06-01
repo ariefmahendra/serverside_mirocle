@@ -138,7 +138,7 @@ client.on("message", (topic, message) => {
             waktu_mulai,
             waktu_selesai,
             data.detakJantungRataRata,
-            data.rataRataSaturasiOksigen,
+            data.saturasiOksigen,
             data.kaloriTotal,
             data.putaranPedal,
             data.durasi,
